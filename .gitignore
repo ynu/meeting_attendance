@@ -1,0 +1,15 @@
+# log files
+logs/*
+
+# idea project files
+.idea
+
+node_modules
+
+public/bootstrap
+public/jquery
+public/html5shiv
+public/respond
+
+# mac meta data files
+**/.DS_Store
