@@ -60,11 +60,28 @@
   </div>
 
   <script src="/jquery/dist/jquery.min.js"></script>
+  <script src="http://api.map.baidu.com/api?v=2.0&ak=dc3pxy5vQnx3v714ktZtKps4aoO1BYex"></script>
   <script>
     $(function () {
         if ("geolocation" in navigator) {
+            $("#localtion").val("getting current localtion");
             /* 地理位置服务可用 */
             navigator.geolocation.getCurrentPosition(function(position) {
+                /* 坐标转换 http://developer.baidu.com/map/jsdemo.htm#a5_2 */
+                var convertor = new BMap.Convertor();
+                var pointArr = [];
+                pointArr.push(ggPoint);
+                convertor.translate(pointArr, 1, 5, translateCallback);
+                translateCallback = function (data){
+                    if(data.status === 0) {
+                        var pt = data.points[0];
+                        /* 逆地址解析 http://developer.baidu.com/map/jsdemo.htm#i7_2 */
+                        geoc.getLocation(pt, function(rs){
+                            var addComp = rs.addressComponents;
+                            $("#localtion").val(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                        });
+                    }
+                }
                 $("#localtion").val(position.coords.latitude + "," + position.coords.longitude);
             });
         } else {
