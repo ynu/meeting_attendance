@@ -11,14 +11,16 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var name = req.body.name;
   var phone_number = req.body.phone_number;
-  var department = req.body.department;
-  var job = req.body.job;
+  var localtion = req.body.localtion;
+  // var department = req.body.department;
+  // var job = req.body.job;
 
   models.attendance.create({
     name: name,
     phone_number: phone_number,
-    department: department,
-    job: job
+    // department: department,
+    // job: job
+    localtion: localtion
   }).then(function(user) {
     res.render('attend_success', { title: 'customization' });
   }).catch(function(err) {
